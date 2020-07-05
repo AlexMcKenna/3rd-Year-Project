@@ -1,0 +1,133 @@
+DROP TABLE Category cascade;
+
+DROP TABLE Shop cascade;
+
+DROP TABLE Book cascade;
+
+DROP TABLE SalesRep cascade;
+
+DROP TABLE ShopOrder cascade;
+
+DROP TABLE OrderLine cascade;
+
+DROP Table Publisher cascade;
+
+CREATE TABLE Category
+
+(
+
+CategoryID INTEGER ,
+
+Name VARCHAR(50),
+
+CategoryType VARCHAR(20),
+
+CONSTRAINT CT_CHK CHECK (CategoryType IN ('fiction', 'Non-fiction')),
+
+CONSTRAINT Cat_PK PRIMARY KEY (CategoryID)
+
+);
+
+CREATE TABLE SalesRep
+
+(
+
+SalesRepID INTEGER,
+
+Name VARCHAR(50),
+
+CONSTRAINT SL_PK PRIMARY KEY (SalesRepID)
+
+);
+
+CREATE TABLE Shop
+
+(
+
+ShopID INTEGER,
+
+Name VARCHAR(50),
+
+CONSTRAINT Sh_PK PRIMARY KEY (ShopID)
+
+);
+
+CREATE TABLE Publisher
+
+(
+
+PublisherID INTEGER,
+
+Name VARCHAR(50),
+
+CONSTRAINT P_PK PRIMARY KEY (PublisherID)
+
+);
+
+CREATE TABLE Book
+
+(
+
+BookID INTEGER,
+
+Title VARCHAR(50),
+
+Price numeric (10,2),
+
+CategoryID INTEGER,
+
+PublisherID INTEGER,
+
+CONSTRAINT B_PK PRIMARY KEY (BookID),
+
+CONSTRAINT check_price check (Price >= 0.0),
+
+CONSTRAINT BCat_FK FOREIGN KEY (CategoryID) REFERENCES Category on delete RESTRICT on update CASCADE,
+
+CONSTRAINT PUB_FK FOREIGN KEY (PublisherID) REFERENCES Publisher on delete RESTRICT on update CASCADE
+
+);
+
+CREATE TABLE ShopOrder
+
+(
+
+ShopOrderID INTEGER,
+
+OrderDate DATE,
+
+ShopID INTEGER,
+
+SalesRepID INTEGER,
+
+CONSTRAINT SO_PK PRIMARY KEY (ShopOrderID),
+
+CONSTRAINT ShopID_FK FOREIGN KEY (ShopID) REFERENCES Shop on delete RESTRICT on update CASCADE,
+
+CONSTRAINT SalesRep_FK FOREIGN KEY (SalesRepID) REFERENCES SalesRep on delete RESTRICT on update CASCADE
+
+);
+
+CREATE TABLE OrderLine
+
+(
+
+ShopOrderID INTEGER,
+
+BookID INTEGER,
+
+Quantity INTEGER,
+
+UnitSellingPrice NUMERIC(10,2),
+
+CONSTRAINT OL_PK PRIMARY KEY (ShopOrderID, BookID),
+
+CONSTRAINT check_QTY check (Quantity>=0),
+
+CONSTRAINT check_UnitPrice check (UnitSellingPrice>=0),
+
+CONSTRAINT ShopOrderID_FK FOREIGN KEY (ShopOrderID) REFERENCES ShopOrder on delete CASCADE on update CASCADE,
+
+CONSTRAINT Book_FK FOREIGN KEY (BookID) REFERENCES Book on delete RESTRICT on update CASCADE
+
+);

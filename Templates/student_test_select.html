@@ -1,0 +1,50 @@
+<!doctype html>
+<!-- Specify language -->
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>Test Selection</title>
+	<!-- inport necesarry files and extensions -->
+	<link rel="stylesheet" href="css/styles.css?v=1.0">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<script type="text/javascript" src="jquery-1.8.3.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="page.js"></script>
+	<link rel="stylesheet" href="page.css">
+</head>
+
+<body>
+	<div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="width:200px;" id="mySidebar">
+  		<button class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">Close &times;</button>
+  			<form action = '/load_test_select'>
+				<input type = "submit" class="w3-bar-item w3-button" value = "Test selection">
+			</form>
+  			<a href="#" class="w3-bar-item w3-button">Review Test</a>
+  			<form action = '/'>
+				<input type = "submit" class="w3-bar-item w3-button" value = "Log out">
+			</form>
+	</div>
+
+<div class="w3-main" style="margin-left:200px">
+	<div class="w3-teal">
+  		<button class="w3-button w3-teal w3-xlarge w3-hide-large" onclick="w3_open()">&#9776;</button>
+  	<div class="w3-container">
+    	<h1>Select from the below the test you wish to take</h1>
+  	</div>
+	</div>
+	<div>
+	<!--table of tests to select from, needs read function for array of items -->
+	<form action="opened_test.html" method="get" id="my-form">
+		<select id = "test_select"></select>
+		<!--submit button -->
+		<p><input type="submit" value="Open" id="test_open" onClick="window.open"></p>
+	</form>
+	</div>
+	<br>
+	<!--text box containing error info -->
+	<input type="text" name="telnum" value="" readonly="readonly"/>
+   
+</div>   
+</body>
+</html>
